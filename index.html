@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Samuel D. Monk — Cybersecurity & Risk Management</title>
+  <!-- Open Graph / iMessage link preview -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://samueldmonk.github.io" />
+  <meta property="og:title"       content="Samuel D. Monk" />
+  <meta property="og:description" content="Cybersecurity & Risk Management · Indiana University '26" />
+  <meta name="twitter:card"        content="summary" />
+  <meta name="twitter:title"       content="Samuel D. Monk" />
+  <meta name="twitter:description" content="Cybersecurity & Risk Management · Indiana University '26" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -752,13 +760,58 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
-      nav { padding: 0 20px; }
+      nav { padding: 0 16px; }
       .nav-contact { display: none; }
-      .resume-grid { grid-template-columns: 1fr; }
-      .focus-grid { grid-template-columns: 1fr; }
+
+      /* Home page: stack everything in normal flow */
+      #page-home {
+        justify-content: flex-start;
+        padding-top: 80px;
+        padding-bottom: 60px;
+      }
+      .hero-inner {
+        padding: 0 20px;
+      }
+      .hero-name { font-size: 2.6rem; }
+      .hero-title { font-size: 0.95rem; }
+      .hero-ctas {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .hero-ctas .btn-primary,
+      .hero-ctas .btn-secondary,
+      .hero-ctas .btn-download {
+        flex: 1 1 calc(50% - 5px);
+        justify-content: center;
+        text-align: center;
+      }
+      .currently-card { max-width: 100%; }
+
+      /* Stats: pull out of absolute positioning, flow below card */
+      .stats-row {
+        position: static;
+        transform: none;
+        margin-top: 28px;
+        gap: 32px;
+        justify-content: center;
+        opacity: 1;
+        animation: none;
+      }
+
+      /* Hide scroll hint on mobile */
+      .scroll-hint { display: none; }
+
+      /* Statement page */
+      #page-statement { padding: 60px 20px 60px; }
       .statement-card { padding: 28px 24px; }
-      .hero-name { font-size: 2.4rem; }
-      .stats-row { gap: 24px; }
+      .focus-grid { grid-template-columns: 1fr; }
+
+      /* Resume page */
+      #page-resume { padding: 60px 20px 60px; }
+      .resume-grid { grid-template-columns: 1fr; }
+
+      /* Timeline date wraps below role on small screens */
+      .timeline-meta { flex-direction: column; gap: 2px; }
     }
   </style>
 </head>
