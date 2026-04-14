@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samuel D. Monk — Cybersecurity & Risk Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #0a0d12;
+      --bg2:       #0f1318;
+      --bg3:       #161b22;
+      --border:    #21262d;
+      --border2:   #30363d;
+      --text:      #cdd9e5;
+      --text-dim:  #8b949e;
+      --text-faint:#4d5562;
+      --accent:    #4fa3f7;
+      --accent2:   #388bfd;
+      --accent-glow: rgba(79,163,247,0.15);
+      --white:     #e6edf3;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,13,18,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+    }
+
+    .nav-links button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s, transform 0.1s;
+      letter-spacing: 0.02em;
+      position: relative;
+    }
+    .nav-links button:hover { color: var(--white); background: var(--bg3); }
+    .nav-links button:active { transform: scale(0.94); }
+    .nav-links button.active { color: var(--accent); background: var(--accent-glow); }
+    .nav-links button.active::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 99px;
+    }
+
+    .nav-contact {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .nav-contact a {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-contact a:hover { color: var(--accent); }
+
+    /* ── PAGES ── */
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding-top: 60px;
+    }
+    .page.active { display: block; }
+
+    /* ── HOME PAGE ── */
+    #page-home {
+      position: relative;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding-top: 60px;
+      overflow: hidden;
+    }
+    #page-home.active { display: flex; }
+
+    /* Grid background */
+    #page-home::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 40%, transparent 100%);
+    }
+
+    /* Glow orb */
+    #page-home::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(79,163,247,0.08) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 700px;
+      padding: 0 32px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.1s forwards;
+    }
+
+    .hero-name {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.25s forwards;
+    }
+
+    .hero-title {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.4s forwards;
+    }
+    .hero-title strong { color: var(--text); font-weight: 500; }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.55s forwards;
+    }
+    .hero-tag {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 99px;
+      padding: 5px 14px;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.7s forwards;
+    }
+    .btn-primary {
+      background: var(--accent2);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.12s, box-shadow 0.2s;
+      letter-spacing: 0.01em;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(79,163,247,0.3); }
+    .btn-primary:active { transform: scale(0.96) translateY(0); box-shadow: none; }
+
+    .btn-secondary {
+      background: var(--bg3);
+      color: var(--text);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.12s, color 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-secondary:hover { background: var(--bg2); border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .btn-secondary:active { transform: scale(0.96) translateY(0); }
+
+    .btn-download {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, transform 0.12s;
+    }
+    .btn-download:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+    .btn-download:active { transform: scale(0.96); }
+
+    /* Currently Working On card */
+    .currently-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--accent);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-top: 28px;
+      max-width: 560px;
+      text-align: left;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.85s forwards;
+    }
+    .currently-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 5px;
+      flex-shrink: 0;
+      animation: dotPulse 2.2s ease-in-out infinite;
+    }
+    .currently-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+    .currently-text {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.55;
+    }
+    .currently-text strong { color: var(--text); font-weight: 500; }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-faint);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: fadeIn 1s ease 1.2s forwards;
+      opacity: 0;
+    }
+    .scroll-hint .bar {
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 1.5s ease-in-out infinite;
+    }
+
+    /* Stats row */
+    .stats-row {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 48px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.9s forwards;
+      z-index: 1;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .stat-num span { color: var(--accent); }
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 2px;
+    }
+
+    /* ── STATEMENT PAGE ── */
+    #page-statement {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 80px 32px 80px;
+    }
+
+    .page-header {
+      margin-bottom: 48px;
+    }
+    .page-header .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .page-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .page-header .underline {
+      width: 36px;
+      height: 2px;
+      background: var(--accent);
+      margin-top: 14px;
+    }
+
+    .statement-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 48px 52px;
+      position: relative;
+      overflow: hidden;
+    }
+    .statement-card::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 40px;
+      font-size: 9rem;
+      color: var(--accent);
+      opacity: 0.05;
+      font-family: Georgia, serif;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .statement-greeting {
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .statement-body p {
+      font-size: 0.97rem;
+      line-height: 1.85;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .statement-body p:last-child { margin-bottom: 0; }
+    .statement-body strong { color: var(--white); font-weight: 600; }
+
+    .statement-sig {
+      margin-top: 36px;
+      padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .statement-sig .sig-label {
+      font-size: 0.72rem;
+      color: var(--text-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+    .statement-sig .sig-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .statement-sig .sig-title {
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    /* Focus areas */
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .focus-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+    .focus-card:hover { border-color: var(--accent); }
+    .focus-icon {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+    .focus-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .focus-desc {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ── RESUME PAGE ── */
+    #page-resume {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 80px 32px 80px;
+    }
+
+    .resume-grid {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* Section heading */
+    .sec-heading {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sec-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Timeline */
+    .timeline { margin-bottom: 40px; }
+    .timeline-item {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 28px;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(79,163,247,0.15);
+    }
+    .timeline-item:first-child::before {
+      animation: dotPulse 2.2s ease-in-out infinite;
+    }
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: 2.5px;
+      top: 20px;
+      bottom: -28px;
+      width: 1px;
+      background: var(--border);
+    }
+    .timeline-item:last-child::after { display: none; }
+
+    .timeline-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .timeline-role {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .timeline-date {
+      font-size: 0.72rem;
+      color: var(--text-faint);
+      white-space: nowrap;
+    }
+    .timeline-org {
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .timeline-bullets {
+      list-style: none;
+    }
+    .timeline-bullets li {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.55;
+      margin-bottom: 5px;
+      padding-left: 14px;
+      position: relative;
+    }
+    .timeline-bullets li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.65rem;
+      top: 2px;
+    }
+
+    /* Right sidebar */
+    .resume-sidebar { display: flex; flex-direction: column; gap: 32px; }
+
+    .sidebar-section { }
+
+    /* Skill pills */
+    .skill-group { margin-bottom: 16px; }
+    .skill-group-label {
+      font-size: 0.68rem;
+      color: var(--text-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .skill-pill {
+      background: var(--bg3);
+      border: 1px solid var(--border2);
+      border-radius: 5px;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .skill-pill:hover { border-color: var(--accent); color: var(--accent); }
+    .skill-pill.accent {
+      background: var(--accent-glow);
+      border-color: rgba(79,163,247,0.3);
+      color: var(--accent);
+    }
+
+    /* Education card */
+    .edu-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .edu-school {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .edu-school-full {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .edu-degree {
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .edu-date {
+      font-size: 0.7rem;
+      color: var(--text-faint);
+    }
+
+    /* Involvement card */
+    .involvement-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .inv-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .inv-org {
+      font-size: 0.76rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .inv-roles {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-style: italic;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+    .inv-desc {
+      font-size: 0.76rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* Interests */
+    .interests-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .interest-pill {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 5px 12px;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    /* Contact bar at bottom of resume */
+    .contact-bar {
+      margin-top: 40px;
+      padding: 20px 24px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .contact-bar a {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .contact-bar a:hover { color: var(--accent); }
+    .contact-bar .dot {
+      width: 3px; height: 3px;
+      background: var(--border2);
+      border-radius: 50%;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 1; }
+    }
+    @keyframes dotPulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(79,163,247,0.15); }
+      50%       { box-shadow: 0 0 0 7px rgba(79,163,247,0.04), 0 0 0 3px rgba(79,163,247,0.35); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 0 20px; }
+      .nav-contact { display: none; }
+      .resume-grid { grid-template-columns: 1fr; }
+      .focus-grid { grid-template-columns: 1fr; }
+      .statement-card { padding: 28px 24px; }
+      .hero-name { font-size: 2.4rem; }
+      .stats-row { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SD<span>M</span></div>
+  <div class="nav-links">
+    <button onclick="showPage('home')" id="nav-home" class="active">Home</button>
+    <button onclick="showPage('statement')" id="nav-statement">Statement</button>
+    <button onclick="showPage('resume')" id="nav-resume">Resume</button>
+  </div>
+  <div class="nav-contact">
+    <a href="mailto:mr.samuel.d.monk@gmail.com">mr.samuel.d.monk@gmail.com</a>
+    <a href="https://linkedin.com/in/samueldmonk" target="_blank">LinkedIn ↗</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════ -->
+<div id="page-home" class="page active">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Cybersecurity · Risk Management · AI Governance</div>
+    <h1 class="hero-name">Samuel D. Monk</h1>
+    <p class="hero-title">
+      Bridging <strong>technical depth</strong> and <strong>strategic thinking</strong> at the intersection of
+      cybersecurity, national security, and responsible technology.
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag">PAM / IAM Governance</span>
+      <span class="hero-tag">Risk Assessment</span>
+      <span class="hero-tag">AI Governance</span>
+      <span class="hero-tag">Pen Testing Coordination</span>
+      <span class="hero-tag">Workflow Mapping</span>
+      <span class="hero-tag">Defense Consulting</span>
+    </div>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="showPage('resume')">View Resume</button>
+      <button class="btn-secondary" onclick="showPage('statement')">Professional Statement</button>
+      <a class="btn-download" href="samuel-monk-resume.pdf" download="Samuel_Monk_Resume.pdf" title="Download Resume PDF">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Resume PDF
+      </a>
+    </div>
+
+    <div class="currently-card">
+      <div class="currently-dot"></div>
+      <div class="currently-content">
+        <div class="currently-label">Currently</div>
+        <div class="currently-text">Leading an Army-sponsored insider-threat oversight initiative at <strong>Hacking for Defense (H4D)</strong> in partnership with III Armored Corps — designing scalable behavioral risk frameworks using AI/ML-assisted approaches.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-num">2<span>+</span></div>
+      <div class="stat-label">Years in Security</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Dec <span>'26</span></div>
+      <div class="stat-label">graduating</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Explore</span>
+    <div class="bar"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: PROFESSIONAL STATEMENT
+══════════════════════════════════════ -->
+<div id="page-statement" class="page">
+  <div id="page-statement-inner">
+
+    <div class="page-header">
+      <div class="eyebrow">Professional Statement</div>
+      <h2>About Samuel</h2>
+      <div class="underline"></div>
+    </div>
+
+    <div class="statement-card">
+      <div class="statement-greeting">Dear Reader</div>
+      <div class="statement-body">
+        <p>
+          I am a <strong>Cybersecurity and Global Data Policy</strong> student at Indiana University with experience spanning
+          enterprise risk management, defense consulting, and AI governance strategy. My work centers on strengthening
+          systems at the intersection of cybersecurity, national security innovation, and responsible technology development.
+        </p>
+        <p>
+          Currently, I serve as a <strong>Systems and Process Consultant for Hacking for Defense</strong>, where I lead an
+          Army-sponsored initiative addressing insider-threat oversight and behavioral risk detection frameworks. In this role,
+          I translate stakeholder insights into scalable system design requirements while exploring AI-assisted approaches
+          to risk prioritization and workflow improvement.
+        </p>
+        <p>
+          Previously, I interned within <strong>Allianz Life's Risk &amp; Resilience division</strong>, where I analyzed
+          Privileged Access Management databases, supported enterprise AI governance initiatives, and helped align penetration
+          testing priorities with strategic risk objectives. I regularly translated technical findings into executive-level
+          summaries for senior leadership, strengthening my ability to bridge technical and strategic decision-making.
+        </p>
+        <p>
+          Across these experiences, I have developed a strong foundation in <strong>IAM governance, risk assessment,
+          AI security strategy, and operational workflow mapping</strong>. I am particularly motivated by roles that require
+          both analytical depth and systems-level thinking — especially in environments where cybersecurity, innovation,
+          and mission impact intersect.
+        </p>
+        <p>
+          I am seeking opportunities where I can contribute to forward-looking security strategy while continuing to grow
+          within high-performing teams focused on resilience, national security, and responsible technology advancement.
+        </p>
+      </div>
+      <div class="statement-sig">
+        <div class="sig-label">Sincerely</div>
+        <div class="sig-name">Samuel D. Monk</div>
+        <div class="sig-title">Cybersecurity & Risk Management · Indiana University '26</div>
+      </div>
+    </div>
+
+    <div class="focus-grid">
+      <div class="focus-card">
+        <div class="focus-icon">🛡️</div>
+        <div class="focus-title">Enterprise Security</div>
+        <div class="focus-desc">PAM analysis, IAM governance, and risk exposure management across critical systems.</div>
+      </div>
+      <div class="focus-card">
+        <div class="focus-icon">🤖</div>
+        <div class="focus-title">AI Governance</div>
+        <div class="focus-desc">Responsible AI strategy, risk mapping, and AI-assisted threat detection frameworks.</div>
+      </div>
+      <div class="focus-card">
+        <div class="focus-icon">🏛️</div>
+        <div class="focus-title">Defense Consulting</div>
+        <div class="focus-desc">Army-sponsored insider-threat research, stakeholder translation, and process design.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: RESUME
+══════════════════════════════════════ -->
+<div id="page-resume" class="page">
+  <div id="page-resume-inner">
+
+    <div class="page-header">
+      <div class="eyebrow">Resume</div>
+      <h2>Experience & Skills</h2>
+      <div class="underline"></div>
+    </div>
+
+    <div class="resume-grid">
+
+      <!-- LEFT: Experience -->
+      <div class="resume-main">
+
+        <div class="sec-heading">Experience</div>
+        <div class="timeline">
+
+          <div class="timeline-item">
+            <div class="timeline-meta">
+              <span class="timeline-role">Systems and Process Consultant</span>
+              <span class="timeline-date">Jan 2026 – Present</span>
+            </div>
+            <div class="timeline-org">Hacking For Defense (H4D) · Arlington, VA (Remote)</div>
+            <ul class="timeline-bullets">
+              <li>Selected as Team Leader for an Army-sponsored project in partnership with III Armored Corps addressing gaps in insider-threat oversight.</li>
+              <li>Leading a cross-functional team to design a scalable framework for reviewing behavioral indicators and coordinating early intervention efforts.</li>
+              <li>Conducting 100+ stakeholder interviews with Army leadership and translating findings into operational and system design requirements.</li>
+              <li>Mapping current insider-threat workflows to identify inefficiencies, risk concentration points, and process vulnerabilities.</li>
+              <li>Exploring AI/ML-assisted approaches for report screening, pattern recognition, and risk prioritization.</li>
+            </ul>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-meta">
+              <span class="timeline-role">Information Security Risk Management Intern</span>
+              <span class="timeline-date">May – Dec 2025</span>
+            </div>
+            <div class="timeline-org">Allianz Life Insurance Company of North America · Golden Valley, MN</div>
+            <ul class="timeline-bullets">
+              <li>Earned competitive internship extension based on performance within the Risk &amp; Resilience division.</li>
+              <li>Analyzed Privileged Access Management (PAM) databases to validate elevated access controls and identify risk exposure across critical systems.</li>
+              <li>Contributed to development of enterprise AI security strategy, supporting risk mapping and responsible AI governance planning.</li>
+              <li>Initiated annual penetration testing roadmap planning, coordinating scope definition and aligning testing priorities with risk objectives.</li>
+              <li>Translated technical cybersecurity findings into executive-level summaries for senior leadership.</li>
+            </ul>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-meta">
+              <span class="timeline-role">Strategic Marketing Consultant</span>
+              <span class="timeline-date">Aug – Dec 2022</span>
+            </div>
+            <div class="timeline-org">Global Mamas · Bloomington, IN</div>
+            <ul class="timeline-bullets">
+              <li>Consulted for a Ghana-based non-profit focused on women's empowerment and sustainability.</li>
+              <li>Conducted a sustainability audit to identify ways to reduce waste and improve environmental practices.</li>
+              <li>Developed a marketing strategy to increase brand awareness and reach new audiences.</li>
+            </ul>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-meta">
+              <span class="timeline-role">Investment Analyst</span>
+              <span class="timeline-date">Jan – Jun 2022</span>
+            </div>
+            <div class="timeline-org">Red Knight Investment Fund · Benilde-St. Margaret's School</div>
+            <ul class="timeline-bullets">
+              <li>Collaborated with peers to manage a live student-run stock portfolio worth over $250,000.</li>
+              <li>Personally oversaw investment decisions within the Consumer Discretionary sector of the portfolio.</li>
+              <li>Applied financial analysis and modeling to evaluate positions and support data-driven portfolio decisions.</li>
+            </ul>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-meta">
+              <span class="timeline-role">Caddy / Bag Room Assistant</span>
+              <span class="timeline-date">Mar 2021 – Jun 2024</span>
+            </div>
+            <div class="timeline-org">Interlachen Country Club · Edina, MN</div>
+            <ul class="timeline-bullets">
+              <li>Promoted from rookie to "A" level caddy, demonstrating reliability, professionalism, and client service under pressure.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="sec-heading">Leadership & Involvement</div>
+        <div class="involvement-card" style="margin-bottom: 16px;">
+          <div class="inv-title">Phi Kappa Psi Fraternity</div>
+          <div class="inv-org">Indiana University · Sep 2022 – Present</div>
+          <div class="inv-roles">Co-Head of Construction Committee · Apparel Committee Member · Philanthropy Committee Member</div>
+          <div class="inv-desc">
+            Co-headed the Construction Committee overseeing planning, budgeting, and execution of chapter facility projects. Collaborated with vendors and executive leadership to ensure timely and cost-effective delivery. Developed strategies to maximize participation in philanthropic initiatives contributing to local and national charitable causes.
+          </div>
+        </div>
+        <div class="involvement-card" style="margin-bottom: 40px;">
+          <div class="inv-title">Young Men's Service League</div>
+          <div class="inv-org">Eden Prairie Chapter · Aug 2018 – May 2022 · 3 yrs 10 mos</div>
+          <div class="inv-roles">Vice President · Poverty Alleviation Focus</div>
+          <div class="inv-desc">
+            Held progressive leadership roles culminating in Vice President, organizing chapter meetings and facilitating sustained group volunteering efforts focused on poverty alleviation in the local community.
+          </div>
+        </div>
+
+        <div class="contact-bar">
+          <a href="mailto:mr.samuel.d.monk@gmail.com">✉ mr.samuel.d.monk@gmail.com</a>
+          <span class="dot"></span>
+          <a href="https://linkedin.com/in/samueldmonk" target="_blank">🔗 linkedin.com/in/samueldmonk</a>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Sidebar -->
+      <div class="resume-sidebar">
+
+        <div class="sidebar-section">
+          <div class="sec-heading">Education</div>
+          <div class="edu-card">
+            <div class="edu-school">Indiana University</div>
+            <div class="edu-school-full">Luddy School of Informatics &amp; Hamilton Lugar School of Global &amp; International Studies</div>
+            <div class="edu-degree">B.S. Informatics — Cybersecurity &amp; Global Data Policy</div>
+            <div class="edu-date">Expected December 2026 · Bloomington, IN</div>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sec-heading">Technical Skills</div>
+          <div class="skill-group">
+            <div class="skill-group-label">Security & Governance</div>
+            <div class="skill-pills">
+              <span class="skill-pill accent">PAM</span>
+              <span class="skill-pill accent">IAM Governance</span>
+              <span class="skill-pill accent">Risk Assessment</span>
+              <span class="skill-pill accent">AI Governance</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-label">Operations & Analysis</div>
+            <div class="skill-pills">
+              <span class="skill-pill">Pen Testing Coordination</span>
+              <span class="skill-pill">Workflow Mapping</span>
+              <span class="skill-pill">Stakeholder Management</span>
+              <span class="skill-pill">Executive Reporting</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-group-label">Emerging</div>
+            <div class="skill-pills">
+              <span class="skill-pill">AI/ML Risk Frameworks</span>
+              <span class="skill-pill">Insider Threat Detection</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sec-heading">Interests</div>
+          <div class="interests-row">
+            <span class="interest-pill">⛳ Golf</span>
+            <span class="interest-pill">🚀 Space Tech</span>
+            <span class="interest-pill">✈️ Travel</span>
+            <span class="interest-pill">🥊 MMA</span>
+            <span class="interest-pill">🤖 AI & Security</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let transitioning = false;
+
+  function showPage(id) {
+    const allNavBtns = document.querySelectorAll('.nav-links button');
+    const current = document.querySelector('.page.active');
+    const next = document.getElementById('page-' + id);
+
+    if (transitioning || !current || current === next) return;
+    transitioning = true;
+
+    // Update nav immediately
+    allNavBtns.forEach(b => b.classList.remove('active'));
+    document.getElementById('nav-' + id).classList.add('active');
+
+    // ── FADE OUT current ──
+    current.style.transition = 'opacity 0.22s ease, transform 0.22s ease';
+    current.style.opacity = '0';
+    current.style.transform = 'translateY(8px)';
+    current.style.pointerEvents = 'none';
+
+    setTimeout(() => {
+      // Swap display
+      current.classList.remove('active');
+      current.style.transition = '';
+      current.style.opacity = '';
+      current.style.transform = '';
+      current.style.pointerEvents = '';
+
+      // Prepare next — start invisible, slightly above
+      next.classList.add('active');
+      next.style.opacity = '0';
+      next.style.transform = 'translateY(-10px)';
+      next.style.transition = '';
+
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // Force reflow before applying transition
+      void next.offsetHeight;
+
+      // ── FADE IN next ──
+      next.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      next.style.opacity = '1';
+      next.style.transform = 'translateY(0)';
+
+      setTimeout(() => {
+        next.style.transition = '';
+        next.style.opacity = '';
+        next.style.transform = '';
+        transitioning = false;
+
+        // Trigger counter animation when returning to home
+        if (id === 'home') animateStats();
+      }, 320);
+    }, 230);
+  }
+
+  // ── STAT COUNTER ──
+  function animateCount(el, target, suffix, duration) {
+    const start = Date.now();
+    const tick = () => {
+      const progress = Math.min((Date.now() - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  function animateStats() {
+    // stat-num elements: "2+", "Dec '26"
+    const nums = document.querySelectorAll('.stat-num');
+    if (nums[0]) animateCount(nums[0], 2, '+', 800);
+    // Second stat is text-based, no counter needed
+  }
+
+  // Run stats counter on first load
+  window.addEventListener('load', () => {
+    setTimeout(animateStats, 900);
+  });
+</script>
+
+</body>
+</html>
