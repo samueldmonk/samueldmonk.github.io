@@ -9,9 +9,12 @@
   <meta property="og:url"         content="https://samueldmonk.github.io" />
   <meta property="og:title"       content="Samuel D. Monk" />
   <meta property="og:description" content="Cybersecurity & Risk Management · Indiana University '27" />
-  <meta name="twitter:card"        content="summary" />
   <meta name="twitter:title"       content="Samuel D. Monk" />
   <meta name="twitter:description" content="Cybersecurity & Risk Management · Indiana University '27" />
+  <meta property="og:image" content="https://samueldmonk.github.io/og-image.png" />
+  <meta name="twitter:image" content="https://samueldmonk.github.io/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -126,12 +129,24 @@
       display: none;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       min-height: 100vh;
       padding-top: 60px;
       overflow: hidden;
     }
     #page-home.active { display: flex; }
+
+    /* Hero block wraps hero-inner + stats so it stays viewport-centered
+       and Featured Build flows below in normal stacking order. */
+    .hero-block {
+      width: 100%;
+      min-height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
 
     /* Grid background */
     #page-home::before {
@@ -760,6 +775,288 @@
       50%       { box-shadow: 0 0 0 7px rgba(79,163,247,0.04), 0 0 0 3px rgba(79,163,247,0.35); }
     }
 
+    /* ── CURSOR GLOW (follows mouse on home) ── */
+    .cursor-glow {
+      position: fixed;
+      pointer-events: none;
+      width: 520px; height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(79,163,247,0.13) 0%, rgba(79,163,247,0.04) 35%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: opacity 0.4s ease;
+      opacity: 0;
+      z-index: 0;
+      mix-blend-mode: screen;
+    }
+    .cursor-glow.visible { opacity: 1; }
+
+    /* ── DECRYPT TEXT ── */
+    .decrypt {
+      display: inline-block;
+      font-variant-numeric: tabular-nums;
+    }
+    .decrypt .ch-scramble { color: var(--text-faint); opacity: 0.6; }
+
+    /* ── FEATURED BUILD SECTION ── */
+    .featured-build {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 80px 32px 100px;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .featured-build.in-view { opacity: 1; transform: translateY(0); }
+
+    .build-section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .build-section-title {
+      font-size: clamp(1.6rem, 3.2vw, 2.1rem);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .build-card {
+      position: relative;
+      background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+      border: 1px solid var(--border2);
+      border-radius: 18px;
+      padding: 36px 40px;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease, border-color 0.3s, box-shadow 0.3s;
+      cursor: default;
+    }
+    .build-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(79,163,247,0.10) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .build-card:hover { border-color: var(--accent); box-shadow: 0 18px 60px rgba(79,163,247,0.10); }
+    .build-card:hover::before { opacity: 1; }
+
+    .build-card-inner { position: relative; z-index: 1; }
+
+    .build-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(63, 185, 80, 0.12);
+      border: 1px solid rgba(63, 185, 80, 0.35);
+      border-radius: 99px;
+      padding: 4px 12px 4px 10px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #56d364;
+      margin-bottom: 18px;
+    }
+    .build-status .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #56d364;
+      box-shadow: 0 0 0 3px rgba(86,211,100,0.18);
+      animation: dotPulse2 2s ease-in-out infinite;
+    }
+    @keyframes dotPulse2 {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(86,211,100,0.18); }
+      50%       { box-shadow: 0 0 0 7px rgba(86,211,100,0.04), 0 0 0 3px rgba(86,211,100,0.32); }
+    }
+
+    .build-title {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .build-subtitle {
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      margin-bottom: 22px;
+      line-height: 1.55;
+    }
+    .build-subtitle strong { color: var(--text); font-weight: 500; }
+
+    .build-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 24px 0 28px;
+    }
+    .build-stat {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .build-stat .num {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .build-stat .lbl {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .build-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .build-feature {
+      background: rgba(79,163,247,0.06);
+      border: 1px solid rgba(79,163,247,0.25);
+      color: var(--text);
+      font-size: 0.74rem;
+      padding: 4px 11px;
+      border-radius: 6px;
+      letter-spacing: 0.02em;
+    }
+
+    .build-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn-launch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent2);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-launch:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(79,163,247,0.3); }
+    .btn-launch:active { transform: scale(0.96) translateY(0); }
+    .btn-repo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text-dim);
+      border: 1px solid var(--border2);
+      border-radius: 8px;
+      padding: 11px 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, transform 0.15s;
+    }
+    .btn-repo:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+
+    /* ── SCROLL PROGRESS BAR ── */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      z-index: 200;
+      box-shadow: 0 0 10px rgba(79,163,247,0.45);
+      transition: width 0.08s linear;
+      pointer-events: none;
+    }
+
+    /* ── STATUS PILL (Available) ── */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(86,211,100,0.10);
+      border: 1px solid rgba(86,211,100,0.35);
+      border-radius: 99px;
+      padding: 4px 12px 4px 10px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #56d364;
+      white-space: nowrap;
+    }
+    .status-pill .sp-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #56d364;
+      box-shadow: 0 0 0 3px rgba(86,211,100,0.18);
+      animation: dotPulse2 2s ease-in-out infinite;
+    }
+
+    /* ── HERO SCROLL-DOWN INDICATOR ── */
+    .hero-scroll-down {
+      margin-top: 38px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-faint);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 1.0s forwards;
+      transition: color 0.2s;
+      padding: 6px 12px;
+    }
+    .hero-scroll-down:hover { color: var(--accent); }
+    .hero-scroll-down .arrow {
+      width: 18px; height: 18px;
+      animation: arrowBob 1.8s ease-in-out infinite;
+    }
+    @keyframes arrowBob {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50%       { transform: translateY(4px); opacity: 1; }
+    }
+
+    /* ── SECTION REVEAL (Statement & Resume blocks) ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       nav { padding: 0 16px; }
@@ -803,6 +1100,13 @@
       /* Hide scroll hint on mobile */
       .scroll-hint { display: none; }
 
+      /* Featured Build scales down on mobile */
+      .featured-build { padding: 50px 18px 80px; }
+      .build-card { padding: 22px; }
+      .build-title { font-size: 1.4rem; }
+      .build-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .cursor-glow { display: none; }
+
       /* Statement page */
       #page-statement { padding: 60px 20px 60px; }
       .statement-card { padding: 28px 24px; }
@@ -819,6 +1123,12 @@
 </head>
 <body>
 
+<!-- Scroll progress bar -->
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+<!-- Cursor glow that follows mouse on home -->
+<div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
 <!-- NAV -->
 <nav>
   <div class="nav-logo">SD<span>M</span></div>
@@ -828,6 +1138,7 @@
     <button onclick="showPage('resume')" id="nav-resume">Resume</button>
   </div>
   <div class="nav-contact">
+    <span class="status-pill" title="Open to summer 2026 internships and opportunities"><span class="sp-dot"></span>Available · Summer 2026</span>
     <a href="mailto:mr.samuel.d.monk@gmail.com">mr.samuel.d.monk@gmail.com</a>
     <a href="https://linkedin.com/in/samueldmonk" target="_blank">LinkedIn ↗</a>
   </div>
@@ -837,12 +1148,12 @@
      PAGE: HOME
 ══════════════════════════════════════ -->
 <div id="page-home" class="page active">
+  <div class="hero-block">
   <div class="hero-inner">
-    <div class="hero-eyebrow">Cybersecurity · Risk Management · AI Governance</div>
-    <h1 class="hero-name">Samuel D. Monk</h1>
+    <div class="hero-eyebrow"><span class="decrypt" data-decrypt="Cybersecurity · Risk Management · AI Governance" data-decrypt-duration="650">Cybersecurity · Risk Management · AI Governance</span></div>
+    <h1 class="hero-name"><span class="decrypt" data-decrypt="Samuel D. Monk" data-decrypt-duration="800">Samuel D. Monk</span></h1>
     <p class="hero-title">
-      Bridging <strong>technical depth</strong> and <strong>strategic thinking</strong> at the intersection of
-      cybersecurity, national security, and responsible technology.
+      Bridging <strong>technical depth</strong> and <strong>strategic thinking</strong> at the intersection of cybersecurity, national security, and responsible technology.
     </p>
     <div class="hero-tags">
       <span class="hero-tag">PAM / IAM Governance</span>
@@ -880,6 +1191,76 @@
       <div class="stat-label">graduating</div>
     </div>
   </div>
+
+  <button class="hero-scroll-down" id="hero-scroll-down" type="button" aria-label="Scroll to Featured Build">
+    Featured Build
+    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
+  </div><!-- /.hero-block -->
+
+  <!-- ══════════════════════════════════════
+       FEATURED BUILD: insider threat tool
+  ══════════════════════════════════════ -->
+  <section class="featured-build" id="featured-build">
+    <div class="build-section-eyebrow">Featured Build</div>
+    <h2 class="build-section-title">Insider Threat Document Triage</h2>
+
+    <div class="build-card" id="build-card">
+      <div class="build-card-inner">
+        <div class="build-status">
+          <span class="status-dot"></span>
+          Live · Phase 1 Prototype
+        </div>
+
+        <h3 class="build-title">AI-assisted review for behavioral risk reporting</h3>
+        <p class="build-subtitle">
+          Browser-based triage tool sponsored by the <strong>III Armored Corps</strong> through Hacking for Defense.
+          Maps document content to the <strong>13 DITMAC categories</strong> and SEAD 3 / 4 thresholds,
+          with explainable evidence and a tamper-evident audit log. Runs entirely client-side, no data leaves the browser.
+        </p>
+
+        <div class="build-stats">
+          <div class="build-stat">
+            <div class="num" data-count-to="13">0</div>
+            <div class="lbl">DITMAC Categories</div>
+          </div>
+          <div class="build-stat">
+            <div class="num" data-count-to="23">0</div>
+            <div class="lbl">Detection Rules</div>
+          </div>
+          <div class="build-stat">
+            <div class="num" data-count-to="100" data-count-suffix="%">0%</div>
+            <div class="lbl">Local Processing</div>
+          </div>
+          <div class="build-stat">
+            <div class="num">OCR</div>
+            <div class="lbl">Scanned Docs</div>
+          </div>
+        </div>
+
+        <div class="build-features">
+          <span class="build-feature">Sign-in &amp; identity</span>
+          <span class="build-feature">Integrity-chained audit log</span>
+          <span class="build-feature">Line-aware PDF extraction</span>
+          <span class="build-feature">Evidence drill-down</span>
+          <span class="build-feature">Negation detection</span>
+          <span class="build-feature">Risk matrix</span>
+          <span class="build-feature">Report export</span>
+        </div>
+
+        <div class="build-cta-row">
+          <a class="btn-launch" href="https://samueldmonk.github.io/insider-threat-triage/" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Open Live Demo
+          </a>
+          <a class="btn-repo" href="https://github.com/samueldmonk/insider-threat-triage" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -888,13 +1269,13 @@
 <div id="page-statement" class="page">
   <div id="page-statement-inner">
 
-    <div class="page-header">
+    <div class="page-header reveal">
       <div class="eyebrow">Professional Statement</div>
       <h2>About Samuel</h2>
       <div class="underline"></div>
     </div>
 
-    <div class="statement-card">
+    <div class="statement-card reveal">
       <div class="statement-greeting">Dear Reader</div>
       <div class="statement-body">
         <p>
@@ -932,7 +1313,7 @@
       </div>
     </div>
 
-    <div class="focus-grid">
+    <div class="focus-grid reveal">
       <div class="focus-card">
         <div class="focus-icon">🛡️</div>
         <div class="focus-title">Enterprise Security</div>
@@ -959,13 +1340,13 @@
 <div id="page-resume" class="page">
   <div id="page-resume-inner">
 
-    <div class="page-header">
+    <div class="page-header reveal">
       <div class="eyebrow">Resume</div>
       <h2>Experience & Skills</h2>
       <div class="underline"></div>
     </div>
 
-    <div class="resume-grid">
+    <div class="resume-grid reveal">
 
       <!-- LEFT: Experience -->
       <div class="resume-main">
@@ -1206,6 +1587,251 @@
   // Run stats counter on first load
   window.addEventListener('load', () => {
     setTimeout(animateStats, 900);
+  });
+
+  /* ════════════════════════════════════════════════════════════════
+     DECRYPT TEXT — characters cycle through cipher then lock in L→R
+  ════════════════════════════════════════════════════════════════ */
+  const DECRYPT_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+  function decryptElement(el) {
+    const finalText = el.getAttribute('data-decrypt') || el.textContent;
+    const finalHtml = el.innerHTML;
+    const duration = parseInt(el.getAttribute('data-decrypt-duration') || '900', 10);
+    const chars = finalText.split('');
+    const startedAt = performance.now();
+    const lockPerChar = duration / chars.length;
+
+    function tick(now) {
+      const elapsed = now - startedAt;
+      let html = '';
+      let done = true;
+      for (let i = 0; i < chars.length; i++) {
+        const realChar = chars[i];
+        const lockTime = i * lockPerChar;
+        if (elapsed >= lockTime + lockPerChar * 0.25) {
+          // Locked in
+          html += realChar === ' ' ? ' ' : escapeHtml(realChar);
+        } else if (elapsed >= lockTime - 30) {
+          // Currently scrambling
+          if (realChar === ' ') {
+            html += ' ';
+          } else {
+            const rand = DECRYPT_CHARS[Math.floor(Math.random() * DECRYPT_CHARS.length)];
+            html += '<span class="ch-scramble">' + rand + '</span>';
+          }
+          done = false;
+        } else {
+          // Not yet visible — keep blank slot
+          html += ' ';
+          done = false;
+        }
+      }
+      el.innerHTML = html;
+      if (done) {
+        el.innerHTML = finalHtml;
+      } else {
+        requestAnimationFrame(tick);
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  function escapeHtml(c) {
+    return c.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function runDecrypt() {
+    document.querySelectorAll('.decrypt[data-decrypt]').forEach(el => decryptElement(el));
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     CURSOR GLOW — fixed radial follows mouse on home page
+  ════════════════════════════════════════════════════════════════ */
+  (function() {
+    const glow = document.getElementById('cursor-glow');
+    if (!glow) return;
+    let visible = false;
+
+    function onMove(e) {
+      glow.style.left = e.clientX + 'px';
+      glow.style.top = e.clientY + 'px';
+      if (!visible) {
+        const onHome = document.getElementById('page-home').classList.contains('active');
+        if (onHome) { glow.classList.add('visible'); visible = true; }
+      }
+    }
+    function onLeave() { glow.classList.remove('visible'); visible = false; }
+
+    window.addEventListener('mousemove', onMove, { passive: true });
+    document.addEventListener('mouseleave', onLeave);
+
+    // Hide on non-home pages
+    const navButtons = document.querySelectorAll('.nav-links button');
+    navButtons.forEach(btn => btn.addEventListener('click', () => {
+      const goingHome = btn.id === 'nav-home';
+      if (!goingHome) { glow.classList.remove('visible'); visible = false; }
+    }));
+  })();
+
+  /* ════════════════════════════════════════════════════════════════
+     MAGNETIC BUTTONS — slight pull toward cursor on hover
+  ════════════════════════════════════════════════════════════════ */
+  (function() {
+    const targets = document.querySelectorAll('.btn-primary, .btn-secondary, .btn-download, .btn-launch, .btn-repo');
+    targets.forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        el.style.transform = `translate(${x * 0.18}px, ${y * 0.22}px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+      });
+    });
+  })();
+
+  /* ════════════════════════════════════════════════════════════════
+     BUILD CARD — 3D tilt on hover, tracks cursor
+  ════════════════════════════════════════════════════════════════ */
+  (function() {
+    const card = document.getElementById('build-card');
+    if (!card) return;
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const rx = (y - 0.5) * -6;
+      const ry = (x - 0.5) * 6;
+      card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+      card.style.setProperty('--mx', (x * 100) + '%');
+      card.style.setProperty('--my', (y * 100) + '%');
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  })();
+
+  /* ════════════════════════════════════════════════════════════════
+     SCROLL REVEAL — featured-build fades in + triggers stat counters
+  ════════════════════════════════════════════════════════════════ */
+  (function() {
+    const targets = document.querySelectorAll('.featured-build');
+    let countersFired = false;
+    function fireCounters() {
+      if (countersFired) return;
+      countersFired = true;
+      if (typeof animateBuildStats === 'function') animateBuildStats();
+    }
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(el => el.classList.add('in-view'));
+      fireCounters();
+      return;
+    }
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          fireCounters();
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    targets.forEach(el => obs.observe(el));
+  })();
+
+  /* ════════════════════════════════════════════════════════════════
+     ROTATING EYEBROW — cycles through tagline variants every 4.5s
+  ════════════════════════════════════════════════════════════════ */
+  (function() {
+    const lines = [
+      'Cybersecurity · Risk Management · AI Governance',
+      'Insider Threat · Defense Innovation · Governance',
+      'AI Risk · Compliance · National Security',
+      'Privileged Access · Audit · Behavioral Risk'
+    ];
+    const el = document.querySelector('.hero-eyebrow .decrypt');
+    if (!el) return;
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % lines.length;
+      el.setAttribute('data-decrypt', lines[i]);
+      el.textContent = lines[i];
+      decryptElement(el);
+    }, 4500);
+  })();
+
+  /* ════════════════════════════════════════════════════════════════
+     BUILD STAT COUNTERS — animate when Featured Build enters view
+  ════════════════════════════════════════════════════════════════ */
+  function animateBuildStats() {
+    document.querySelectorAll('.build-stat .num[data-count-to]').forEach(el => {
+      const target = parseInt(el.getAttribute('data-count-to'), 10);
+      const suffix = el.getAttribute('data-count-suffix') || '';
+      animateCount(el, target, suffix, 1100);
+    });
+  }
+
+  /* ════════════════════════════════════════════════════════════════
+     HERO SCROLL-DOWN — smooth-scroll to Featured Build on click
+  ════════════════════════════════════════════════════════════════ */
+  (function() {
+    const btn = document.getElementById('hero-scroll-down');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      const target = document.getElementById('featured-build');
+      if (!target) return;
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  })();
+
+  /* ════════════════════════════════════════════════════════════════
+     SCROLL PROGRESS BAR
+  ════════════════════════════════════════════════════════════════ */
+  (function() {
+    const bar = document.getElementById('scroll-progress');
+    if (!bar) return;
+    function update() {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+      bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  /* ════════════════════════════════════════════════════════════════
+     REVEAL ON SCROLL — for .reveal elements (Statement, Resume)
+     and trigger build stat counters when Featured Build is visible
+  ════════════════════════════════════════════════════════════════ */
+  (function() {
+    const buildStatsTriggered = { fired: false };
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+      animateBuildStats();
+      return;
+    }
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          if (entry.target.id === 'featured-build' && !buildStatsTriggered.fired) {
+            buildStatsTriggered.fired = true;
+            animateBuildStats();
+          }
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  })();
+
+  /* Run decrypt on initial load */
+  window.addEventListener('load', () => {
+    setTimeout(runDecrypt, 150);
   });
 </script>
 
