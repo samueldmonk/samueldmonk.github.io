@@ -361,17 +361,34 @@
     }
 
     /* Stats row */
+    /* Old stats-row kept for backwards compat, but not used in new layout */
     .stats-row {
+      display: none;
+    }
+
+    /* ── HERO FOOTER ROW (stat | Featured Build | stat) ── */
+    .hero-footer {
       position: absolute;
-      bottom: 80px;
+      bottom: 32px;
       left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      gap: 48px;
+      width: 100%;
+      max-width: 880px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+      padding: 0 32px;
       opacity: 0;
-      animation: fadeUp 0.6s ease 0.9s forwards;
-      z-index: 1;
+      animation: fadeUp 0.6s ease 0.95s forwards;
+      z-index: 2;
+      pointer-events: none;
     }
+    .hero-footer > * { pointer-events: auto; }
+    .hero-footer .stat { text-align: center; }
+    .hero-footer .stat.left  { text-align: left;  justify-self: start; }
+    .hero-footer .stat.right { text-align: right; justify-self: end; }
+    .hero-footer .hero-scroll-down { justify-self: center; }
     .stat { text-align: center; }
     .stat-num {
       font-size: 1.6rem;
@@ -1018,9 +1035,8 @@
       animation: dotPulse2 2s ease-in-out infinite;
     }
 
-    /* ── HERO SCROLL-DOWN INDICATOR ── */
+    /* ── HERO SCROLL-DOWN INDICATOR (now lives inside hero-footer) ── */
     .hero-scroll-down {
-      margin-top: 38px;
       display: inline-flex;
       flex-direction: column;
       align-items: center;
@@ -1034,8 +1050,6 @@
       font-weight: 600;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      opacity: 0;
-      animation: fadeUp 0.6s ease 1.0s forwards;
       transition: color 0.2s;
       padding: 6px 12px;
     }
@@ -1087,18 +1101,25 @@
       .currently-card { max-width: 100%; }
 
       /* Stats: pull out of absolute positioning, flow below card */
-      .stats-row {
+      .stats-row { display: none; }
+
+      /* Hero footer: stack stats vertically, hide scroll-down on mobile */
+      .hero-footer {
         position: static;
-        transform: none;
-        margin-top: 28px;
-        gap: 32px;
+        flex-direction: row;
         justify-content: center;
+        gap: 32px;
+        margin-top: 28px;
+        padding: 0 18px;
         opacity: 1;
         animation: none;
       }
+      .hero-footer .stat.left,
+      .hero-footer .stat.right { text-align: center; }
 
-      /* Hide scroll hint on mobile */
+      /* Hide scroll hint and the inline scroll-down prompt on mobile */
       .scroll-hint { display: none; }
+      .hero-scroll-down { display: none; }
 
       /* Featured Build scales down on mobile */
       .featured-build { padding: 50px 18px 80px; }
@@ -1181,21 +1202,22 @@
     </div>
   </div>
 
-  <div class="stats-row">
-    <div class="stat">
+  <div class="hero-footer">
+    <div class="stat left">
       <div class="stat-num">1<span>+</span></div>
       <div class="stat-label">Years in Security</div>
     </div>
-    <div class="stat">
+
+    <button class="hero-scroll-down" id="hero-scroll-down" type="button" aria-label="Scroll to Featured Build">
+      Featured Build
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+
+    <div class="stat right">
       <div class="stat-num">May <span>'27</span></div>
       <div class="stat-label">graduating</div>
     </div>
   </div>
-
-  <button class="hero-scroll-down" id="hero-scroll-down" type="button" aria-label="Scroll to Featured Build">
-    Featured Build
-    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-  </button>
   </div><!-- /.hero-block -->
 
   <!-- ══════════════════════════════════════
