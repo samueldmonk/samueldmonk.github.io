@@ -1113,8 +1113,14 @@
       /* Hero footer: stack stats vertically, hide scroll-down on mobile */
       .hero-footer {
         position: static;
+        left: auto;
+        right: auto;
+        transform: none;
+        max-width: 100%;
+        display: flex;
         flex-direction: row;
         justify-content: center;
+        align-items: center;
         gap: 32px;
         margin-top: 28px;
         padding: 0 18px;
@@ -1122,7 +1128,10 @@
         animation: none;
       }
       .hero-footer .stat.left,
-      .hero-footer .stat.right { text-align: center; }
+      .hero-footer .stat.right {
+        text-align: center;
+        justify-self: auto;
+      }
 
       /* Hide scroll hint and the inline scroll-down prompt on mobile */
       .scroll-hint { display: none; }
