@@ -374,25 +374,23 @@
     .hero-footer {
       position: absolute;
       bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 880px;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      left: 0;
+      right: 0;
+      display: flex;
       align-items: center;
-      gap: 24px;
+      justify-content: center;
+      gap: 120px;
       padding: 0 32px;
       opacity: 0;
       animation: fadeUp 0.6s ease 0.95s forwards;
       z-index: 2;
       pointer-events: none;
     }
-    .hero-footer > * { pointer-events: auto; }
+    .hero-footer > * {
+      pointer-events: auto;
+      flex: 0 0 auto;
+    }
     .hero-footer .stat { text-align: center; }
-    .hero-footer .stat.left  { text-align: left;  justify-self: start; }
-    .hero-footer .stat.right { text-align: right; justify-self: end; }
-    .hero-footer .hero-scroll-down { justify-self: center; }
     .stat { text-align: center; }
     .stat-num {
       font-size: 1.6rem;
