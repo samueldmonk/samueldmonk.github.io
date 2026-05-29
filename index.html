@@ -188,6 +188,10 @@
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 20px;
+      min-height: 2.6em; /* reserve space for 2-line wrap so rotation doesn't jump layout */
+      display: flex;
+      align-items: center;
+      justify-content: center;
       opacity: 0;
       animation: fadeUp 0.6s ease 0.1s forwards;
     }
@@ -809,8 +813,11 @@
 
     /* ── DECRYPT TEXT ── */
     .decrypt {
-      display: inline-block;
+      display: inline;
       font-variant-numeric: tabular-nums;
+      overflow-wrap: break-word;
+      word-break: normal;
+      max-width: 100%;
     }
     .decrypt .ch-scramble { color: var(--text-faint); opacity: 0.6; }
 
@@ -1765,8 +1772,12 @@
 
   /* ════════════════════════════════════════════════════════════════
      ROTATING EYEBROW — cycles through tagline variants every 4.5s
+     Disabled on narrow screens to prevent mobile layout jitter.
   ════════════════════════════════════════════════════════════════ */
   (function() {
+    // Skip rotation on mobile where varying string widths cause layout jumps
+    if (window.matchMedia && window.matchMedia('(max-width: 760px)').matches) return;
+
     const lines = [
       'Cybersecurity · Risk Management · AI Governance',
       'Insider Threat · Defense Innovation · Governance',
