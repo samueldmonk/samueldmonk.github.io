@@ -1007,6 +1007,140 @@
     }
     .btn-repo:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
 
+    /* ── LIVE BRIEFINGS SECTION ── */
+    .briefings-section {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 32px 100px;
+    }
+    .briefings-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    .briefings-title {
+      font-size: clamp(1.6rem, 3.2vw, 2.1rem);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .briefings-desc {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 36px;
+      line-height: 1.55;
+    }
+    .briefings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .briefing-card {
+      position: relative;
+      background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+      border: 1px solid var(--border2);
+      border-radius: 16px;
+      padding: 26px 24px 22px;
+      text-decoration: none;
+      color: inherit;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease, border-color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .briefing-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(79,163,247,0.10) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .briefing-card:hover { border-color: var(--accent); box-shadow: 0 14px 40px rgba(79,163,247,0.10); }
+    .briefing-card:hover::before { opacity: 1; }
+    .briefing-card-inner { position: relative; z-index: 1; }
+
+    .briefing-symbol {
+      font-size: 1.6rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+    .briefing-name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .briefing-tag {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .briefing-desc-line {
+      font-size: 0.86rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      margin-bottom: 18px;
+      min-height: 3.6em;
+    }
+    .briefing-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .briefing-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #56d364;
+    }
+    .briefing-status .br-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #56d364;
+      box-shadow: 0 0 0 3px rgba(86,211,100,0.18);
+      animation: dotPulse2 2s ease-in-out infinite;
+    }
+    .briefing-cta {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .briefing-cta .arrow {
+      transition: transform 0.2s;
+    }
+    .briefing-card:hover .briefing-cta .arrow {
+      transform: translateX(3px);
+    }
+
     /* ── SCROLL PROGRESS BAR ── */
     .scroll-progress {
       position: fixed;
@@ -1145,6 +1279,12 @@
       .build-title { font-size: 1.4rem; }
       .build-stats { grid-template-columns: 1fr 1fr; gap: 10px; }
       .cursor-glow { display: none; }
+
+      /* Briefings stack on mobile */
+      .briefings-section { padding: 20px 18px 60px; }
+      .briefings-grid { grid-template-columns: 1fr; gap: 14px; }
+      .briefing-card { padding: 22px 20px 18px; }
+      .briefing-desc-line { min-height: 0; }
 
       /* Statement page */
       #page-statement { padding: 60px 20px 60px; }
@@ -1293,12 +1433,66 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Open Live Demo
           </a>
+          <a class="btn-launch" href="https://samueldmonk.github.io/insider-threat-triage/multi/" target="_blank" rel="noopener" style="background:#1f6feb">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg>
+            Multi-Subject Version
+          </a>
           <a class="btn-repo" href="https://github.com/samueldmonk/insider-threat-triage" target="_blank" rel="noopener">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
             View on GitHub
           </a>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       LIVE BRIEFINGS: three auto-updating digests
+  ══════════════════════════════════════ -->
+  <section class="briefings-section featured-build" id="briefings-section">
+    <div class="briefings-eyebrow">Live Briefings</div>
+    <h2 class="briefings-title">Three auto-updating daily digests</h2>
+    <p class="briefings-desc">A live system I built and maintain that aggregates and curates news across cybersecurity, markets, and combat sports. New editions push three times a day.</p>
+
+    <div class="briefings-grid">
+      <a class="briefing-card" id="briefing-card-cyber" href="https://samueldmonk.github.io/daily-briefings/cyber-briefing.html" target="_blank" rel="noopener">
+        <div class="briefing-card-inner">
+          <div class="briefing-symbol">⛨</div>
+          <div class="briefing-name">The Cyber Wire</div>
+          <div class="briefing-tag">Cybersecurity</div>
+          <div class="briefing-desc-line">Breaches, exploited vulnerabilities, CISA KEV deadlines, and federal cyber moves. Built around the way an analyst actually starts the morning.</div>
+          <div class="briefing-meta">
+            <span class="briefing-status"><span class="br-dot"></span>Updates 3× daily</span>
+            <span class="briefing-cta">Open <span class="arrow">→</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="briefing-card" id="briefing-card-bell" href="https://samueldmonk.github.io/daily-briefings/wallstreet-briefing.html" target="_blank" rel="noopener">
+        <div class="briefing-card-inner">
+          <div class="briefing-symbol">▲</div>
+          <div class="briefing-name">The Closing Bell</div>
+          <div class="briefing-tag">Markets</div>
+          <div class="briefing-desc-line">Top movers, sector rotation, earnings, and macro headlines. The signal cut out of the daily noise from the financial press.</div>
+          <div class="briefing-meta">
+            <span class="briefing-status"><span class="br-dot"></span>Updates 3× daily</span>
+            <span class="briefing-cta">Open <span class="arrow">→</span></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="briefing-card" id="briefing-card-octagon" href="https://samueldmonk.github.io/daily-briefings/mma-briefing.html" target="_blank" rel="noopener">
+        <div class="briefing-card-inner">
+          <div class="briefing-symbol">⊘</div>
+          <div class="briefing-name">The Octagon</div>
+          <div class="briefing-tag">Combat Sports</div>
+          <div class="briefing-desc-line">UFC and MMA news, fight results, signings, and weight-class movement. Curated for fans who follow more than the main card.</div>
+          <div class="briefing-meta">
+            <span class="briefing-status"><span class="br-dot"></span>Updates 3× daily</span>
+            <span class="briefing-cta">Open <span class="arrow">→</span></span>
+          </div>
+        </div>
+      </a>
     </div>
   </section>
 </div>
@@ -1733,23 +1927,27 @@
   })();
 
   /* ════════════════════════════════════════════════════════════════
-     BUILD CARD — 3D tilt on hover, tracks cursor
+     INTERACTIVE CARDS — 3D tilt + cursor-tracking glow on hover
+     Applies to build-card and every briefing-card.
   ════════════════════════════════════════════════════════════════ */
   (function() {
-    const card = document.getElementById('build-card');
-    if (!card) return;
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const y = (e.clientY - rect.top) / rect.height;
-      const rx = (y - 0.5) * -6;
-      const ry = (x - 0.5) * 6;
-      card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
-      card.style.setProperty('--mx', (x * 100) + '%');
-      card.style.setProperty('--my', (y * 100) + '%');
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
+    const cards = Array.from(document.querySelectorAll('#build-card, .briefing-card'));
+    cards.forEach((card) => {
+      const isBriefing = card.classList.contains('briefing-card');
+      const tilt = isBriefing ? 4 : 6;
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        const rx = (y - 0.5) * -tilt;
+        const ry = (x - 0.5) * tilt;
+        card.style.transform = `perspective(1200px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+        card.style.setProperty('--mx', (x * 100) + '%');
+        card.style.setProperty('--my', (y * 100) + '%');
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
     });
   })();
 
