@@ -1298,6 +1298,150 @@
       /* Timeline date wraps below role on small screens */
       .timeline-meta { flex-direction: column; gap: 2px; }
     }
+
+    /* ── CERTIFICATIONS ── */
+    .certs-section { padding-top: 30px; }
+    .certs-grid { display: flex; justify-content: center; }
+
+    .cert-card {
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+      border: 1px solid var(--border2);
+      border-radius: 18px;
+      padding: 32px 34px;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease, border-color 0.3s, box-shadow 0.3s;
+      cursor: default;
+    }
+    .cert-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(91,192,184,0.12) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s;
+      pointer-events: none;
+    }
+    .cert-card:hover { border-color: rgba(91,192,184,0.55); box-shadow: 0 18px 60px rgba(91,192,184,0.10); }
+    .cert-card:hover::before { opacity: 1; }
+    .cert-card-inner { position: relative; z-index: 1; }
+
+    .cert-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .cert-emblem {
+      flex-shrink: 0;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      filter: drop-shadow(0 4px 14px rgba(91,192,184,0.18));
+    }
+    .cert-head { flex: 1; min-width: 0; }
+    .cert-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #56d364;
+      margin-bottom: 11px;
+    }
+    .cert-status .cert-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #56d364;
+      box-shadow: 0 0 0 3px rgba(86,211,100,0.18);
+      animation: dotPulse2 2s ease-in-out infinite;
+    }
+    .cert-title {
+      font-size: 1.42rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 7px;
+    }
+    .cert-title span { color: var(--text-dim); font-weight: 600; }
+    .cert-issuer {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      line-height: 1.45;
+    }
+
+    .cert-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .cert-meta-item {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+    .cert-meta-val {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+      margin-bottom: 5px;
+      letter-spacing: -0.01em;
+    }
+    .cert-meta-lbl {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .cert-domains-label {
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 12px;
+    }
+    .cert-domains {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+    .cert-domain {
+      background: rgba(91,192,184,0.06);
+      border: 1px solid rgba(91,192,184,0.28);
+      color: var(--text);
+      font-size: 0.73rem;
+      padding: 4px 11px;
+      border-radius: 6px;
+      letter-spacing: 0.01em;
+    }
+    .cert-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media (max-width: 700px) {
+      .cert-card { padding: 24px 22px; }
+      .cert-top { gap: 14px; }
+      .cert-emblem { width: 50px; height: 50px; }
+      .cert-title { font-size: 1.2rem; }
+      .cert-meta { grid-template-columns: 1fr 1fr; gap: 10px; }
+    }
   </style>
 </head>
 <body>
@@ -1493,6 +1637,80 @@
           </div>
         </div>
       </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════
+       CERTIFICATIONS
+  ══════════════════════════════════════ -->
+  <section class="featured-build certs-section" id="certifications">
+    <div class="build-section-eyebrow">Credentials</div>
+    <h2 class="build-section-title">Certifications</h2>
+    <p class="briefings-desc">Industry credentials that validate my foundation across the core domains of information security.</p>
+
+    <div class="certs-grid">
+      <article class="cert-card" id="cert-card-isc2">
+        <div class="cert-card-inner">
+          <div class="cert-top">
+            <div class="cert-emblem" aria-hidden="true">
+              <svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="ccGrad" x1="6" y1="6" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#5cc2b8"/>
+                    <stop offset="1" stop-color="#a6ce4e"/>
+                  </linearGradient>
+                </defs>
+                <rect x="5.5" y="5.5" width="47" height="47" rx="15" fill="url(#ccGrad)" fill-opacity="0.08" stroke="url(#ccGrad)" stroke-width="2.5"/>
+                <text x="29" y="37.5" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" font-weight="800" letter-spacing="-1" fill="#e6edf3">CC</text>
+              </svg>
+            </div>
+            <div class="cert-head">
+              <div class="cert-status"><span class="cert-dot"></span>ISC2 Certified &middot; 2026</div>
+              <h3 class="cert-title">Certified in Cybersecurity <span>(CC)</span></h3>
+              <div class="cert-issuer">ISC2 &mdash; International Information System Security Certification Consortium</div>
+            </div>
+          </div>
+
+          <div class="cert-meta">
+            <div class="cert-meta-item">
+              <div class="cert-meta-val">4261326</div>
+              <div class="cert-meta-lbl">Certification No.</div>
+            </div>
+            <div class="cert-meta-item">
+              <div class="cert-meta-val">2026</div>
+              <div class="cert-meta-lbl">Issued</div>
+            </div>
+            <div class="cert-meta-item">
+              <div class="cert-meta-val">2029</div>
+              <div class="cert-meta-lbl">Valid Through</div>
+            </div>
+            <div class="cert-meta-item">
+              <div class="cert-meta-val">ANAB</div>
+              <div class="cert-meta-lbl">Accredited</div>
+            </div>
+          </div>
+
+          <div class="cert-domains-label">Exam Domains</div>
+          <div class="cert-domains">
+            <span class="cert-domain">Security Principles</span>
+            <span class="cert-domain">Access Controls</span>
+            <span class="cert-domain">Network Security</span>
+            <span class="cert-domain">Security Operations</span>
+            <span class="cert-domain">BC / DR &amp; Incident Response</span>
+          </div>
+
+          <div class="cert-cta-row">
+            <a class="btn-launch" href="isc2-cc-certificate.pdf" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              View Certificate
+            </a>
+            <a class="btn-repo" href="https://www.isc2.org/certifications/cc" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+              About the Credential
+            </a>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 </div>
@@ -1931,7 +2149,7 @@
      Applies to build-card and every briefing-card.
   ════════════════════════════════════════════════════════════════ */
   (function() {
-    const cards = Array.from(document.querySelectorAll('#build-card, .briefing-card'));
+    const cards = Array.from(document.querySelectorAll('#build-card, .briefing-card, .cert-card'));
     cards.forEach((card) => {
       const isBriefing = card.classList.contains('briefing-card');
       const tilt = isBriefing ? 4 : 6;
