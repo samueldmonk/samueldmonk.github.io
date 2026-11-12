@@ -181,6 +181,17 @@
       padding: 0 32px;
     }
 
+    .hero-photo {
+      width: 148px; height: 148px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 22%;
+      display: block;
+      margin: 0 auto 22px;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 0 6px var(--accent-glow), 0 10px 30px rgba(0,0,0,0.35);
+    }
+    @media (max-width: 600px) { .hero-photo { width: 116px; height: 116px; margin-bottom: 18px; } }
     .hero-eyebrow {
       font-size: 0.72rem;
       font-weight: 600;
@@ -1472,6 +1483,7 @@
 <div id="page-home" class="page active">
   <div class="hero-block">
   <div class="hero-inner">
+    <img class="hero-photo" src="samuel-monk-headshot.jpg" alt="Samuel D. Monk" width="148" height="148" />
     <div class="hero-eyebrow"><span class="decrypt" data-decrypt="Cybersecurity · Risk Management · AI Governance" data-decrypt-duration="650">Cybersecurity · Risk Management · AI Governance</span></div>
     <h1 class="hero-name"><span class="decrypt" data-decrypt="Samuel D. Monk" data-decrypt-duration="800">Samuel D. Monk</span></h1>
     <p class="hero-title">
@@ -1498,7 +1510,7 @@
       <div class="currently-dot"></div>
       <div class="currently-content">
         <div class="currently-label">Currently</div>
-        <div class="currently-text">Beginning a new role as an <strong>AI Integration Intern at Steel Partners</strong> — applying AI/ML and automation to streamline operations and support data-driven decision-making.</div>
+        <div class="currently-text"><strong>AI Integration Intern at Steel Partners Holdings</strong> — helping shape the company’s AI use policy, guidelines, and employee training.</div>
       </div>
     </div>
   </div>
@@ -1730,38 +1742,51 @@
       <div class="statement-greeting">Dear Reader</div>
       <div class="statement-body">
         <p>
-          I am a <strong>Cybersecurity and Global Data Policy</strong> student at Indiana University with experience spanning
-          enterprise risk management, defense consulting, and AI governance strategy. My work centers on strengthening
-          systems at the intersection of cybersecurity, national security innovation, and responsible technology development.
+          I am a senior at Indiana University studying <strong>Informatics with a concentration in Cybersecurity and
+          Global Data Policy</strong>, graduating in May 2027. What sets my work apart is the combination of
+          technical thinking and business acumen: I understand how systems, access, and data create risk, and
+          I understand that security only succeeds when it supports the goals of the business it protects. I
+          bring both perspectives, backed by a work ethic I have built over years of earning every opportunity
+          I have had.
         </p>
         <p>
-          I am beginning a new role at <strong>Steel Partners</strong> as an AI Integration Intern, applying AI
-          and machine learning to streamline operations and support data-driven
-          decision-making. Most recently, I served as a <strong>Systems and Process Consultant through Hacking for Defense</strong>,
-          where I led an Army-sponsored initiative on insider-threat oversight — translating stakeholder insights into scalable
-          system design requirements and exploring AI-assisted approaches to risk prioritization and workflow improvement.
+          Hard work has shaped my career from the start. I began caddying at Interlachen Country Club in
+          high school and was promoted to an A-level caddie through reliability, professionalism, and
+          consistent member feedback. That same approach earned me a competitive extension during my
+          Information Security Risk Management internship at <strong>Allianz Life</strong>, and today I balance a full course
+          load with my role as an <strong>AI Integration Intern at Steel Partners Holdings</strong>. I take ownership of my
+          work, follow through, and hold myself to a high standard whether anyone is watching or not.
         </p>
         <p>
-          Previously, I interned within <strong>Allianz Life's Risk &amp; Resilience division</strong>, where I analyzed
-          Privileged Access Management databases, supported enterprise AI governance initiatives, and helped align penetration
-          testing priorities with strategic risk objectives. I regularly translated technical findings into executive-level
-          summaries for senior leadership, strengthening my ability to bridge technical and strategic decision-making.
+          On the technical side, I analyzed Privileged Access Management databases at Allianz to validate
+          elevated access controls and surface risk exposure across critical systems, helped plan the annual
+          penetration testing roadmap, and contributed to the company's enterprise AI security strategy. As
+          <strong>Team Leader on a Hacking for Defense project for the U.S. Army's III Armored Corps</strong>, I led more
+          than 100 stakeholder interviews, mapped insider-threat workflows to find risk concentration points,
+          and built a browser-based triage tool that maps documents to the 13 DITMAC categories and
+          SEAD 3/4 thresholds while keeping every file on the user's device.
         </p>
         <p>
-          Across these experiences, I have developed a strong foundation in <strong>IAM governance, risk assessment,
-          AI security strategy, and operational workflow mapping</strong>. I am particularly motivated by roles that require
-          both analytical depth and systems-level thinking — especially in environments where cybersecurity, innovation,
-          and mission impact intersect.
+          Just as important, I think like a business professional. My coursework in financial and managerial
+          accounting, economics, information systems, and international business gave me a foundation in
+          how organizations make decisions. I have applied it as team leader in a PwC case competition, as a
+          strategic marketing consultant analyzing financial data and new sales channels for the nonprofit
+          Global Mamas, and at Steel Partners, where I contributed sections now adopted into the company's
+          AI use policy and am authoring its companion guidelines and training program. In every role, I have
+          translated technical findings into clear, executive-level recommendations that leaders can act on.
         </p>
         <p>
-          I am seeking opportunities where I can contribute to forward-looking security strategy while continuing to grow
-          within high-performing teams focused on resilience, national security, and responsible technology advancement.
+          I hold the <strong>ISC2 Certified in Cybersecurity (CC)</strong> credential, will sit for CompTIA Security+ in
+          January 2027, and am a U.S. citizen eligible for a security clearance. I am seeking a full-time role in
+          <strong>cybersecurity risk, governance, or policy</strong>, where I can help build security programs that are
+          technically sound, aligned with business strategy, and trusted by the people who rely on them.
         </p>
       </div>
       <div class="statement-sig">
         <div class="sig-label">Sincerely</div>
         <div class="sig-name">Samuel D. Monk</div>
         <div class="sig-title">Cybersecurity & Risk Management · Indiana University '27</div>
+        <a class="btn-download" href="samuel-monk-professional-statement.pdf" download="Samuel_Monk_Professional_Statement.pdf" style="margin-top:14px;display:inline-flex">Statement PDF</a>
       </div>
     </div>
 
@@ -1811,24 +1836,27 @@
               <span class="timeline-role">AI Integration Intern</span>
               <span class="timeline-date">Aug 2026 – Present</span>
             </div>
-            <div class="timeline-org">Steel Partners · Remote</div>
+            <div class="timeline-org">Steel Partners Holdings · New York, NY (Remote)</div>
             <ul class="timeline-bullets">
-              <li>Applying AI and machine learning to streamline operations, automate workflows, and support data-driven decision-making.</li>
+              <li>Contributed sections adopted into the company AI use policy, now approved for distribution.</li>
+              <li>Independently authoring the companion AI guidelines, best practices, and use cases, scheduled for publication.</li>
+              <li>Creating the company’s first AI training and information newsletter to raise baseline AI fluency across all employees.</li>
+              <li>Helped build an automated email system that distributes training information to floor staff, replacing manual coordination.</li>
             </ul>
           </div>
 
           <div class="timeline-item">
             <div class="timeline-meta">
-              <span class="timeline-role">Systems and Process Consultant</span>
+              <span class="timeline-role">Systems and Process Consultant, Team Leader</span>
               <span class="timeline-date">Jan – Jul 2026</span>
             </div>
             <div class="timeline-org">Hacking For Defense (H4D) · Arlington, VA (Remote)</div>
             <ul class="timeline-bullets">
               <li>Selected as Team Leader for an Army-sponsored project in partnership with III Armored Corps addressing gaps in insider-threat oversight.</li>
-              <li>Led a cross-functional team to design a scalable framework for reviewing behavioral indicators and coordinating early intervention efforts.</li>
+              <li>Led a cross-functional team to design a scalable oversight framework governing how behavioral indicators are reviewed and early intervention is coordinated.</li>
               <li>Conducted 100+ stakeholder interviews with Army leadership and translated findings into operational and system design requirements.</li>
-              <li>Mapped insider-threat workflows to identify inefficiencies, risk concentration points, and process vulnerabilities.</li>
-              <li>Explored AI/ML-assisted approaches for report screening, pattern recognition, and risk prioritization.</li>
+              <li>Mapped current insider-threat workflows to identify inefficiencies, risk concentration points, and process vulnerabilities.</li>
+              <li>Built a browser-based Insider Threat Document Triage Tool mapping documents to the 13 DITMAC categories and SEAD 3/4 adjudicative thresholds, processing files entirely client-side.</li>
             </ul>
           </div>
 
@@ -1933,6 +1961,15 @@
             <div class="edu-degree">Credential No. 4261326</div>
             <div class="edu-date">Issued 2026 · Valid through 2029 · ANAB accredited</div>
           </div>
+          <div class="edu-card" style="margin-top:10px">
+            <div class="edu-school">CompTIA Security+</div>
+            <div class="edu-school-full">In progress</div>
+            <div class="edu-date">Exam scheduled January 2027</div>
+          </div>
+          <div class="edu-card" style="margin-top:10px">
+            <div class="edu-school">Clearance</div>
+            <div class="edu-date">U.S. Citizen · Eligible for security clearance</div>
+          </div>
         </div>
 
         <div class="sidebar-section">
@@ -1958,8 +1995,9 @@
           <div class="skill-group">
             <div class="skill-group-label">Emerging</div>
             <div class="skill-pills">
-              <span class="skill-pill">AI/ML Risk Frameworks</span>
-              <span class="skill-pill">Insider Threat Detection</span>
+              <span class="skill-pill">AI Use Policy Development</span>
+              <span class="skill-pill">Responsible AI Governance</span>
+              <span class="skill-pill">Insider Threat Policy (DITMAC, SEAD 3/4)</span>
             </div>
           </div>
         </div>
