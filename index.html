@@ -140,6 +140,8 @@
     .hero-block {
       width: 100%;
       min-height: calc(100vh - 60px);
+      padding: 40px 0 170px; /* reserve room for the absolutely-positioned stats footer */
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -182,12 +184,12 @@
     }
 
     .hero-photo {
-      width: 148px; height: 148px;
+      width: 128px; height: 128px;
       border-radius: 50%;
       object-fit: cover;
       object-position: 50% 22%;
       display: block;
-      margin: 0 auto 22px;
+      margin: 0 auto 18px;
       border: 2px solid var(--accent);
       box-shadow: 0 0 0 6px var(--accent-glow), 0 10px 30px rgba(0,0,0,0.35);
     }
@@ -1236,6 +1238,7 @@
         padding-top: 80px;
         padding-bottom: 60px;
       }
+      .hero-block { padding: 0; min-height: 0; }
       .hero-inner {
         padding: 0 20px;
       }
@@ -1483,7 +1486,7 @@
 <div id="page-home" class="page active">
   <div class="hero-block">
   <div class="hero-inner">
-    <img class="hero-photo" src="samuel-monk-headshot.jpg" alt="Samuel D. Monk" width="148" height="148" />
+    <img class="hero-photo" src="samuel-monk-headshot.jpg" alt="Samuel D. Monk" width="128" height="128" />
     <div class="hero-eyebrow"><span class="decrypt" data-decrypt="Cybersecurity · Risk Management · AI Governance" data-decrypt-duration="650">Cybersecurity · Risk Management · AI Governance</span></div>
     <h1 class="hero-name"><span class="decrypt" data-decrypt="Samuel D. Monk" data-decrypt-duration="800">Samuel D. Monk</span></h1>
     <p class="hero-title">
